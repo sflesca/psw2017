@@ -15,11 +15,12 @@ public class ciccio extends HttpServlet {
 	
 	@Resource(mappedName="java:/PostgresDS")
 	DataSource dx;
-	Connection con;
+	
 	
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		Connection con=null;
 		response.setContentType("text/html");
 		response.getWriter().println(
 				"<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\r\n" + 

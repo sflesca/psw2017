@@ -28,6 +28,7 @@ public class PrimoServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		
 		gotoPage("/primajsp.jsp",request,response);
 	}
 
