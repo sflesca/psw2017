@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><entities>
 	<entity>
-		<entity-name>org.ProvaWebDB.model.Categoria</entity-name>
+		<entity-name>org.ProvaWebDB.model.Prodotto</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>146</entity-height>
-		<entity-X-Coordinate>50</entity-X-Coordinate>
+		<entity-height>148</entity-height>
+		<entity-X-Coordinate>490</entity-X-Coordinate>
 		<entity-Y-Coordinate>50</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
@@ -11,10 +11,10 @@
 	</entity>
 
 	<entity>
-		<entity-name>org.ProvaWebDB.model.Prodotto</entity-name>
+		<entity-name>org.ProvaWebDB.model.Categoria</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>128</entity-height>
-		<entity-X-Coordinate>490</entity-X-Coordinate>
+		<entity-height>146</entity-height>
+		<entity-X-Coordinate>50</entity-X-Coordinate>
 		<entity-Y-Coordinate>50</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
