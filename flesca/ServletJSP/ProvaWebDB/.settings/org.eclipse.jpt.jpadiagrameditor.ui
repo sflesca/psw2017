@@ -1,0 +1,11 @@
+#This file contains JPA Diagram Editor settings
+#Wed Apr 04 10:13:00 CEST 2018
+supportOrmXml=false
+accessType=field
+defaultTableNamePrefix=
+defaultPackage=org.ProvaWebDB.model
+directEditAffectsClass=true
+diagramFolder=diagrams
+ormXmlFileName=META-INF/orm.xml
+collectionType=collection
+oneToManyOldStyle=false
