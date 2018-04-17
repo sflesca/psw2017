@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-Ciao a tutti
+	<h1 align="center">
+	Ciao a tutti
+	</h1>
+
 </body>
 </html>
