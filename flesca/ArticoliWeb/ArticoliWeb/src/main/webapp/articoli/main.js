@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <h1>\n    {{ title }}!\n  </h1>\n  <table border=1 align=\"center\">\n    <tr *ngFor=\"let articoloit of articoli\" >\n      <td>\n        <app-articolo [articolo]=\"articoloit\" (like)=ringrazia($event)></app-articolo>\n      </td>\n    </tr>\n  </table>\n</div>\n\nInserisci un numero: \n<input type=\"number\" #numero (keyup)=\"0\" /> \n<div>\n    Il doppio di {{numero.value}} &egrave; {{numero.value * 2}}\n</div> "
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <h1>\n    {{ title }}!\n  </h1>\n  <button type=\"button\" (click)=\"getArticoli()\">Refresh</button>\n  <table border=1 align=\"center\">\n    <tr *ngFor=\"let articoloit of articoli\" >\n      <td>\n        <app-articolo [articolo]=\"articoloit\" (like)=ringrazia($event)></app-articolo>\n      </td>\n    </tr>\n  </table>\n</div>\n<app-nuovoArticolo (nuovo)=aggiungiArticolo($event)></app-nuovoArticolo>\nInserisci un numero: \n<input type=\"number\" #numero (keyup)=\"0\" /> \n<div>\n    Il doppio di {{numero.value}} &egrave; {{numero.value * 2}}\n</div> "
 
 /***/ }),
 
@@ -84,6 +84,17 @@ var AppComponent = /** @class */ (function () {
     AppComponent.prototype.ringrazia = function (event) {
         alert("grazie: il numero di like \u00E8: " + event.num);
     };
+    AppComponent.prototype.aggiungiArticolo = function (articolo) {
+        var _this = this;
+        this.articoliService.addArticolo(articolo).subscribe(function (val) {
+            _this.articoli.push(articolo);
+            console.log("POST call successful value returned in body", val);
+        }, function (response) {
+            console.log("POST call in error", response);
+        }, function () {
+            console.log("The POST observable is now completed.");
+        });
+    };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-root',
@@ -115,12 +126,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
 /* harmony import */ var _articolo_articolo_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./articolo/articolo.component */ "./src/app/articolo/articolo.component.ts");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _nuovoArticolo_nuovoArticolo_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./nuovoArticolo/nuovoArticolo.component */ "./src/app/nuovoArticolo/nuovoArticolo.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -134,7 +147,8 @@ var AppModule = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             declarations: [
                 _app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"],
-                _articolo_articolo_component__WEBPACK_IMPORTED_MODULE_4__["ArticoloComponent"]
+                _articolo_articolo_component__WEBPACK_IMPORTED_MODULE_4__["ArticoloComponent"],
+                _nuovoArticolo_nuovoArticolo_component__WEBPACK_IMPORTED_MODULE_6__["NuovoArticoloComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClientModule"]
@@ -211,20 +225,17 @@ var ArticoliService = /** @class */ (function () {
     //////// Save methods //////////
     /** POST: add a new articolo to the server */
     ArticoliService.prototype.addArticolo = function (articolo) {
-        var _this = this;
-        return this.http.post(this.articoliUrl, articolo, httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(function (articolo) { return _this.log("added articolo w/ id=" + articolo.id); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError('addArticolo')));
+        return this.http.post(this.articoliUrl, articolo, httpOptions);
     };
     /** DELETE: delete the articolo from the server */
     ArticoliService.prototype.deleteArticolo = function (articolo) {
-        var _this = this;
         var id = typeof articolo === 'number' ? articolo : articolo.id;
         var url = this.articoliUrl + "/" + id;
-        return this.http.delete(url, httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(function (_) { return _this.log("deleted articolo id=" + id); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError('deleteArticolo')));
+        return this.http.delete(url, httpOptions);
     };
     /** PUT: update the articolo on the server */
     ArticoliService.prototype.updateArticolo = function (articolo) {
-        var _this = this;
-        return this.http.put(this.articoliUrl, articolo, httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(function (_) { return _this.log("updated articolo id=" + articolo.id); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError('updateArticolo')));
+        return this.http.put(this.articoliUrl, articolo, httpOptions);
     };
     /**
      * Handle Http operation that failed.
@@ -333,6 +344,81 @@ var ArticoloComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], ArticoloComponent);
     return ArticoloComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/nuovoArticolo/nuovoArticolo.component.css":
+/*!***********************************************************!*\
+  !*** ./src/app/nuovoArticolo/nuovoArticolo.component.css ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/nuovoArticolo/nuovoArticolo.component.html":
+/*!************************************************************!*\
+  !*** ./src/app/nuovoArticolo/nuovoArticolo.component.html ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<form #myForm=\"ngForm\">\n  <table>\n    <tr>\n      <th>\n        <label for=\"txtId\">Id</label>\n      </th>\n      <td>\n        <input type=\"text\" id=\"txtId\" required [(ngModel)]=\"articolo.id\" name=\"id\">\n      </td>\n    </tr>\n    <tr>\n      <th>\n        <label for=\"txtTitolo\">Titolo</label>\n      </th>\n      <td>\n        <input type=\"text\" id=\"txtTitolo\" required [(ngModel)]=\"articolo.titolo\" name=\"titolo\">\n      </td>\n    </tr>\n    <tr>\n      <th>\n        <label for=\"txtTesto\">Testo</label>\n      </th>\n      <td>\n        <textarea id=\"txtTesto\" required [(ngModel)]=\"articolo.testo\" name=\"testo\"></textarea>\n      </td>\n    </tr>\n  </table>\n\n  <button type=\"button\" [disabled]=\"!myForm.valid\" (click)=\"creanuovo()\">Invia</button>\n  Id: {{articolo.id}}\n</form>"
+
+/***/ }),
+
+/***/ "./src/app/nuovoArticolo/nuovoArticolo.component.ts":
+/*!**********************************************************!*\
+  !*** ./src/app/nuovoArticolo/nuovoArticolo.component.ts ***!
+  \**********************************************************/
+/*! exports provided: NuovoArticoloComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NuovoArticoloComponent", function() { return NuovoArticoloComponent; });
+/* harmony import */ var _articolo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../../articolo */ "./src/articolo.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var NuovoArticoloComponent = /** @class */ (function () {
+    function NuovoArticoloComponent() {
+        this.articolo = new _articolo__WEBPACK_IMPORTED_MODULE_0__["Articolo"]();
+        this.nuovo = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+    }
+    NuovoArticoloComponent.prototype.ngOnInit = function () {
+    };
+    NuovoArticoloComponent.prototype.creanuovo = function () {
+        this.nuovo.emit(this.articolo);
+        this.articolo = new _articolo__WEBPACK_IMPORTED_MODULE_0__["Articolo"]();
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])(),
+        __metadata("design:type", Object)
+    ], NuovoArticoloComponent.prototype, "nuovo", void 0);
+    NuovoArticoloComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-nuovoArticolo',
+            template: __webpack_require__(/*! ./nuovoArticolo.component.html */ "./src/app/nuovoArticolo/nuovoArticolo.component.html"),
+            styles: [__webpack_require__(/*! ./nuovoArticolo.component.css */ "./src/app/nuovoArticolo/nuovoArticolo.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], NuovoArticoloComponent);
+    return NuovoArticoloComponent;
 }());
 
 

@@ -34,6 +34,7 @@ public class ArticoloEndpoint {
 	@POST
 	@Consumes("application/json")
 	public Response create(Articolo entity) {
+		System.out.println("Inserisco articolo "+entity.getTitolo());
 		em.persist(entity);
 		return Response.created(
 				UriBuilder.fromResource(ArticoloEndpoint.class)
