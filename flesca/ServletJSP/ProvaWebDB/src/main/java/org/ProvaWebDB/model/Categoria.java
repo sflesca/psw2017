@@ -4,9 +4,11 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import java.util.Collection;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "Categoria")
+@XmlRootElement
 public class Categoria implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -37,11 +39,11 @@ public class Categoria implements Serializable {
 	}
 
 	public Collection<Prodotto> getProdotto() {
-	    return prodotto;
+		return prodotto;
 	}
 
 	public void setProdotto(Collection<Prodotto> param) {
-	    this.prodotto = param;
+		this.prodotto = param;
 	}
 
 }
