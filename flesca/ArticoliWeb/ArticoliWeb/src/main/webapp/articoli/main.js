@@ -87,7 +87,7 @@ var AppComponent = /** @class */ (function () {
     AppComponent.prototype.aggiungiArticolo = function (articolo) {
         var _this = this;
         this.articoliService.addArticolo(articolo).subscribe(function (val) {
-            _this.articoli.push(articolo);
+            _this.articoli.push(val);
             console.log("POST call successful value returned in body", val);
         }, function (response) {
             console.log("POST call in error", response);
